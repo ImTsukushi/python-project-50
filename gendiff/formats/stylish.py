@@ -1,6 +1,7 @@
 import json
 import os
 
+
 def stylish_diff(file_path1: str, file_path2: str) -> str:
     file_path1 = os.path.abspath(file_path1)
     file_path2 = os.path.abspath(file_path2)
