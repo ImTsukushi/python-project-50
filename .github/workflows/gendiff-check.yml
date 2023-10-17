@@ -19,7 +19,7 @@ jobs:
           pip install pytest
           pip install pytest-cov
           make build
-          make package-reinstall
+          make package-install
       - name: Run linter
         run: make lint
       - name: Run pytest
