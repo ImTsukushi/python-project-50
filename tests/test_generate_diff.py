@@ -1,5 +1,5 @@
 import pytest
-from gendiff.diffgenerator import generate_diff
+from gendiff import generate_diff
 
 with open('./tests/fixtures/expected_results/stylish-flat.txt', mode='r') as file:
     expected = file.read()
