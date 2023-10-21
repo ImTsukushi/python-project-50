@@ -1,14 +1,19 @@
 import pytest
 from gendiff import generate_diff
 
-with open('./tests/fixtures/expected_results/stylish-flat.txt', mode='r') as file:
-    expected = file.read()
 
-file_path_1 = './tests/fixtures/trees/file1.json'
-file_path_2 = './tests/fixtures/trees/file2.json'
+json_flat_1 = './tests/fixtures/trees/file1.json'
+json_flat_2 = './tests/fixtures/trees/file2.json'
+yaml_flat_1 = './tests/fixtures/trees/file1.yml'
+yaml_flat_2 = './tests/fixtures/trees/file2.yml'
+expected = './tests/fixtures/expected_results/stylish-flat.txt'
 
 
 @pytest.mark.parametrize('file_path_1, file_path_2, expected',
-                         [(file_path_1, file_path_2, expected)])
+                         [
+                             (json_flat_1, json_flat_2, expected),
+                             (yaml_flat_1, yaml_flat_2, expected)
+                         ])
 def test_generate_diff(file_path_1, file_path_2, expected):
-    assert (generate_diff(file_path_1, file_path_2) == expected)
+    with open(expected, mode='r') as file:
+        assert generate_diff(file_path_1, file_path_2) == file.read()

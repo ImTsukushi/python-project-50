@@ -1,13 +1,14 @@
-import json
-import os
+from gendiff.file_parsing import absolute_path, get_format, parsing_file
 
 
 def stylish_diff(file_path1: str, file_path2: str) -> str:
-    file_path1 = os.path.abspath(file_path1)
-    file_path2 = os.path.abspath(file_path2)
-    with open(file_path1, 'r') as file1, open(file_path2, 'r') as file2:
-        data1 = json.load(file1)
-        data2 = json.load(file2)
+    abs_path1 = absolute_path(file_path1)
+    abs_path2 = absolute_path(file_path2)
+    file_format1 = get_format(file_path1)
+    file_format2 = get_format(file_path2)
+    data1 = parsing_file(abs_path1, file_format1)
+    data2 = parsing_file(abs_path2, file_format2)
+
     keys = sorted(set(data1.keys()) | set(data2.keys()))
     diff = []
 

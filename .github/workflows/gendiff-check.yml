@@ -15,9 +15,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install poetry
-          pip install flake8
-          pip install pytest
-          pip install pytest-cov
+          poetry add --group dev flake8
+          poetry add --group dev pytest
+          poetry add --group dev pytest-cov
+          poetry add PyYAML
           make install
           make build
       - name: Run linter
