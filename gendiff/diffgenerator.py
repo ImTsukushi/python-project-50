@@ -1,4 +1,5 @@
-from gendiff.formats.stylish import stylish_format, build_diff
+from gendiff.formats.stylish import stylish_format
+from gendiff.makediff import build_diff
 
 
 def generate_diff(file_path1: str, file_path2: str, style="stylish") -> str:

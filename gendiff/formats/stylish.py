@@ -1,4 +1,3 @@
-from gendiff.makediff import build_diff
 import itertools
 
 
@@ -26,30 +25,29 @@ def build_string(dictionary, key, depth, sign='  '):
 
 
 def stylish_format(diff_result):
-
     def walk(node, depth, replacer='  '):
         space = replacer * (depth + 1)
         strings = ''
-        for k, v in node.items():
-            if v['operation'] == 'nested':
-                strings += f"\n{space * 2}{v['key']}: {walk(v['value'], depth + 1)}"
-            elif v['operation'] == 'unchanged':
-                strings += f"\n{space}{build_string(v, 'value', depth)}"
-            elif v['operation'] == 'changed':
-                strings += f"\n{space}{build_string(v, 'old', depth, '- ')}"
-                strings += f"\n{space}{build_string(v, 'new', depth, '+ ')}"
-            elif v['operation'] == 'removed':
-                strings += f"\n{space}{build_string(v, 'value', depth, '- ')}"
-            elif v['operation'] == 'added':
-                strings += f"\n{space}{build_string(v, 'value', depth, '+ ')}"
+        operation_mapping = {
+            'nested': lambda v, depth, space:
+            f"\n{space * 2}{v['key']}: {walk(v['value'], depth + 1)}",
+            'unchanged': lambda v, depth, space:
+            f"\n{space}{build_string(v, 'value', depth)}",
+            'changed': lambda v, depth, space:
+            f"\n{space}{build_string(v, 'old', depth, '- ')}\n{space}"
+            f"{build_string(v, 'new', depth, '+ ')}",
+            'removed': lambda v, depth, space:
+            f"\n{space}{build_string(v, 'value', depth, '- ')}",
+            'added': lambda v, depth, space:
+            f"\n{space}{build_string(v, 'value', depth, '+ ')}",
+        }
+
+        for key, value in node.items():
+            if value['operation'] in operation_mapping:
+                strings += (operation_mapping[value['operation']]
+                            (value, depth, space))
+
         result = itertools.chain('{', strings, '\n', ['    ' * depth + '}'])
         return ''.join(result)
+
     return walk(diff_result, 0)
-
-
-if __name__ == "__main__":
-    file_path1 = "/home/nexus/hexlet-projects/python-project-50/tests/fixtures/trees/file1.json"
-    file_path2 = "/home/nexus/hexlet-projects/python-project-50/tests/fixtures/trees/file2.json"
-    diff = build_diff(file_path1, file_path2)
-    buuuu = stylish_format(diff)
-    print(buuuu)
