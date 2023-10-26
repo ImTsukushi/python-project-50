@@ -1,6 +1,3 @@
-from gendiff.makediff import build_diff
-
-
 def plain_value(value):
     if isinstance(value, dict):
         return '[complex value]'
@@ -49,6 +46,3 @@ def plain_format(diff_result: dict):
         return '\n'.join(result)
 
     return walk(diff_result, '')
-
-
-
