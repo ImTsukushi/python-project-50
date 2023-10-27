@@ -27,11 +27,10 @@ def compare_dicts(dict1, dict2):
     return result
 
 
-def build_diff(file_path1, file_path2):
+def build_diff(file_path1: str, file_path2: str):
     abs_paths = map(absolute_path, [file_path1, file_path2])
     file_formats = map(get_format, [file_path1, file_path2])
     dicts = map(parsing_file, abs_paths, file_formats)
     dict1, dict2 = dicts
     result = compare_dicts(dict1, dict2)
-
     return result
