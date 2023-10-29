@@ -11,6 +11,11 @@ FORMATS = {
 
 
 def generate_diff(file_path1: str, file_path2: str, style="stylish") -> str:
+    """
+    Функция принимает два пути до файла,
+    опционально требуемый стиль и возвращает
+    разницу между двумя файлами в определенном стиле
+    """
     format_func = FORMATS.get(style)
     if format_func:
         data = format_func(build_diff(file_path1, file_path2))

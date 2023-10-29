@@ -1,7 +1,11 @@
 from gendiff.file_parsing import absolute_path, get_format, parsing_file
 
 
-def compare_dicts(dict1, dict2):
+def compare_dicts(dict1: dict, dict2: dict) -> dict:
+    """
+    Функция принимает файлы в виде словарей и возвращает
+    разницу между ними в виде словарей
+    """
     keys = sorted(dict1.keys() | dict2.keys())
     result = {}
     for key in keys:
@@ -27,7 +31,11 @@ def compare_dicts(dict1, dict2):
     return result
 
 
-def build_diff(file_path1: str, file_path2: str):
+def build_diff(file_path1: str, file_path2: str) -> dict:
+    """
+    Функция принимает пути до файлов и возвращает разницу
+    между ними в виде словаря
+    """
     abs_paths = map(absolute_path, [file_path1, file_path2])
     file_formats = map(get_format, [file_path1, file_path2])
     dicts = map(parsing_file, abs_paths, file_formats)

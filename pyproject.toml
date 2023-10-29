@@ -1,12 +1,21 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
-authors = ["ImTsukushi <cucker30000@gmail.com>"]
+description = "Compare 2 json or yaml files"
+authors = ["ImTsukushi <imtsukushi@ya.ru>"]
 readme = "README.md"
 packages = [
     {include = "gendiff"}
 ]
+classifiers = [
+        "Development Status :: 3 - Alpha",
+        "Environment :: Console",
+        "Framework :: Flake8",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: Russian",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python :: 3.10",
+	]
 
 [tool.poetry.dependencies]
 python = "^3.10"

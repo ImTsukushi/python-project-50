@@ -1,4 +1,7 @@
 def plain_value(value):
+    """
+    Функция изменяет значения под json формат
+    """
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, bool):
@@ -10,28 +13,32 @@ def plain_value(value):
     return f"'{value}'"
 
 
-def handle_changed(value, current_path):
+def branch_changed(value, current_path):
     return (f"Property '{current_path}' was updated. "
             f"From {plain_value(value['old'])} to {plain_value(value['new'])}")
 
 
-def handle_removed(value, current_path):
+def branch_removed(value, current_path):
     return f"Property '{current_path}' was removed"
 
 
-def handle_added(value, current_path):
+def branch_added(value, current_path):
     return (f"Property '{current_path}' was added "
             f"with value: {plain_value(value['value'])}")
 
 
-def plain_format(diff_result: dict):
+def plain_format(diff_result: dict) -> str:
+    """
+    Функция рекурсивно преобразует разницу в файлах
+    в строковую форму в формате plain text
+    """
     operations = {
         'changed':
-            handle_changed,
+            branch_changed,
         'removed':
-            handle_removed,
+            branch_removed,
         'added':
-            handle_added,
+            branch_added,
         'nested':
             lambda value, current_path: walk(value['value'], current_path + '.')
     }

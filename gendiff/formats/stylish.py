@@ -2,6 +2,9 @@ import itertools
 
 
 def stylish_value(value, depth):
+    """
+    Функция изменяет значения под json формат
+    """
     if isinstance(value, dict):
         string = ''
         for key, value in value.items():
@@ -19,12 +22,19 @@ def stylish_value(value, depth):
 
 
 def build_string(dictionary, key, depth, sign='  '):
+    """
+    Преобразует значения в строку
+    """
     string = f"{'  ' * depth}{sign}{dictionary['key']}: " \
              f"{stylish_value(dictionary[key], depth + 1)}"
     return string
 
 
-def stylish_format(diff_result):
+def stylish_format(diff_result: dict) -> str:
+    """
+    Функция рекурсивно преобразует разницу в файлах
+    в строковую форму в формате stylish text
+    """
     def walk(node, depth, replacer='  '):
         space = replacer * (depth + 1)
         strings = ''
